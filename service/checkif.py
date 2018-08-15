@@ -2,7 +2,8 @@
 import socket
 import fcntl
 import struct
- 
+import commands as sp
+
 def check(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -29,4 +30,15 @@ def check(ifname):
         else:
             print e
             s.close()
+
+def check_net(ifname):
+    status,result = sp.getstatusoutput("ping -c1 -w2 -I " + str(ifname)+ " 8.8.8.8")
+    if status == 0:
+        print("TRUE")
+        return True
+    else:
+        print("System  is DOWN !")
+        return False
+
+check_net('wlo1')
     
