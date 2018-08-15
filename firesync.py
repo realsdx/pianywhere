@@ -28,7 +28,7 @@ class FirebaseDB():
 		data = self.db.child(model_name).get()
 		print(data.val())
 
-fdb = FirebaseDB()
-model = fdb.new_model("gps-data")
-fdb.push_new(model, "{ 'con':'hello2','help6':'one'}")
-fdb.get_all(model)
+#fdb = FirebaseDB()
+#model = fdb.new_model("gps-data")
+#fdb.push_new(model, "{ 'con':'hello2','help6':'one'}")
+#fdb.get_all(model)

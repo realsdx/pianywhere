@@ -16,12 +16,13 @@ if "OK".encode() in reply:
         reply = ser.read(ser.inWaiting())
         print(reply.decode())
 
-        while True:
-            ser.write(str.encode("AT+CGPSINFO\r"))
-            time.sleep(3)
-            reply = ser.read(ser.inWaiting())
-            print(reply.decode())
+        #while True:
+        ser.write(str.encode("AT+CGPSINFO\r"))
+        time.sleep(3)
+        reply = ser.read(ser.inWaiting())
+        print(reply.decode())
 
 else:
         print("Setup Not Complete.")
 
+ser.close()
