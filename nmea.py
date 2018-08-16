@@ -1,7 +1,7 @@
 import serial
 import time
 import pynmea2
-from firesync import FirebaseDB
+from mods.firesync import FirebaseDB
 import json
 
 PORT="/dev/ttyUSB1"
