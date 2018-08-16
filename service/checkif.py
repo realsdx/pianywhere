@@ -76,4 +76,3 @@ if(ppp == True):
 if(ppp == "NODEV"):
     logger.critical("ppp0 Interface not detected.Check Serial conection")
 
-restart_net()
