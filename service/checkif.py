@@ -51,6 +51,13 @@ def check_net(ifname):
     except Exception as e:
         logger.error(e.strerror)
 
+def restart_net():
+    status,result = sp.getstatusoutput("sudo systemctl restart networking")
+    if status == 0:
+        logger.info("networking service restarted")
+    else:
+        logger.warning("DNT KNOW")
+
 check_net('eno12')
 check('eno12')
 check('eno1')
