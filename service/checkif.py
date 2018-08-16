@@ -4,6 +4,7 @@ import fcntl
 import struct
 import commands as sp
 import logging
+import time
 
 logging.basicConfig(filename="InterfaceCheck.log",
     format='%(asctime)s - %(levelname)s:%(funcName)s - %(message)s')
@@ -19,20 +20,20 @@ def check(ifname):
             s.fileno(),0x8915,
             struct.pack('256s', ifname[:15]))[20:24])
         if ip:
-            logger.info( "Device is up -IP %s" % ip)
+            logger.info("Device %s is up -IP %s" % (ifname,ip))
             s.close()
             return True
         else:
             s.close()
-            logger.error( "Can't get the Device IP")
+            logger.error( "Can't get the Device %s IP" % (ifname))
 
     except IOError as e:
         if (e.errno == 19 ):
-            logger.warning("No Such device")
+            logger.warning("No Such device- %s" %(ifanme))
             s.close()
-            return False
+            return "NODEV"
         if (e.errno == 99 ):
-            logger.warning("Interface is down")
+            logger.warning("Interface %s is down" %(ifname))
             s.close()
             return False
         else:
@@ -58,8 +59,21 @@ def restart_net():
     else:
         logger.warning("DNT KNOW")
 
-check_net('eno12')
-check('eno12')
-check('eno1')
-check('wlo1')
-    
+
+ppp = check('ppp0')
+
+while(ppp == False):
+    logger.warning("Interface ppp0 is down. Attempting to restart networking.service")
+    restart_net()
+    time.sleep(5)
+    logger.info("networking.service restart done. Cheking again")
+    ppp = check('ppp0')
+
+if(ppp == True):
+    logger.info("Interface ppp0 is up")
+    check_net('ppp0')
+
+if(ppp == "NODEV"):
+    logger.critical("ppp0 Interface not detected.Check Serial conection")
+
+restart_net()
