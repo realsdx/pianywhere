@@ -1,9 +1,15 @@
 import serial
 import time
 import pynmea2
-from mods.firesync import FirebaseDB
 import json
 import logging
+
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+
+from mods.firesync import FirebaseDB
 
 PORT="/dev/ttyUSB1"
 
