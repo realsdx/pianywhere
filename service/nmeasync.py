@@ -42,10 +42,14 @@ try:
                 gp=line
 
         if gp:
-            nmeaobj = pynmea2.parse(gp)
-            data = {nmeaobj.fields[i][0] : nmeaobj.data[i] for i in range(len(nmeaobj.fields))}
-            upload_to_firebase(data)
-            logger.info("GPS:GPGGA data successfully uploaded to FIrebase")
+            try:
+                nmeaobj = pynmea2.parse(gp)
+                data = {nmeaobj.fields[i][0] : nmeaobj.data[i] for i in range(len(nmeaobj.fields))}
+                upload_to_firebase(data)
+                logger.info("GPS:GPGGA data successfully uploaded to Firebase")
+            except Exception as ec:
+                logger.error(ep)
+                pass
         else:
             logger.warning("No GPS:GPGGA data recevied")
 

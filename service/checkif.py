@@ -57,25 +57,28 @@ def restart_net():
     if status == 0:
         logger.info("networking service restarted")
     else:
-        logger.warning("DNT KNOW")
+        logger.warning("networking restart Atempt failed.")
 
-
-ppp = check('ppp0')
-
-while(ppp == False):
-    logger.warning("Interface ppp0 is down. Attempting to restart networking.service")
-    restart_net()
-    time.sleep(5)
-    logger.info("networking.service restart done. Cheking again")
+while True:
     ppp = check('ppp0')
 
-if(ppp == True):
-    logger.info("Interface ppp0 is up")
-    check_net('ppp0')
+    while(ppp == False):
+        logger.warning("Interface ppp0 is down. Attempting to restart networking.service")
+        restart_net()
+        time.sleep(5)
+        logger.info("networking.service restart done. Cheking again")
+        ppp = check('ppp0')
 
-if(ppp == "NODEV"):
-    logger.critical("ppp0 Interface not detected.Check Serial conection. Atempting restart")
-    restart_net()
-    time.sleep(5)
-    logger.info("networking.service restart done. Cheking again")
-    ppp = check('ppp0')
+    if(ppp == True):
+        logger.info("Interface ppp0 is up")
+        check_net('ppp0')
+
+    if(ppp == "NODEV"):
+        logger.critical("ppp0 Interface not detected.Check Serial conection. Atempting restart")
+        restart_net()
+        time.sleep(5)
+        logger.info("networking.service restart done. Cheking again")
+        ppp = check('ppp0')
+
+    ## Check for Interface every 10mins
+    time.sleep(600)
