@@ -29,7 +29,7 @@ def check(ifname):
 
     except IOError as e:
         if (e.errno == 19 ):
-            logger.warning("No Such device- %s" %(ifanme))
+            logger.warning("No Such device- %s" %(ifname))
             s.close()
             return "NODEV"
         if (e.errno == 99 ):
@@ -74,5 +74,8 @@ if(ppp == True):
     check_net('ppp0')
 
 if(ppp == "NODEV"):
-    logger.critical("ppp0 Interface not detected.Check Serial conection")
-
+    logger.critical("ppp0 Interface not detected.Check Serial conection. Atempting restart")
+    restart_net()
+    time.sleep(5)
+    logger.info("networking.service restart done. Cheking again")
+    ppp = check('ppp0')
