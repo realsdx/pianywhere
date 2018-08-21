@@ -8,7 +8,8 @@ Type=simple
 Restart=always
 RestartSec=10
 User=pi
-ExecStart=/usr/bin/env pyhton /home/pi/pianywhere/service/checkif.py
+WorkingDirectory=/home/pi/pianywhere/service/
+ExecStart=/usr/bin/python /home/pi/pianywhere/service/checkif.py
 
 [Install]
 WantedBy=multi-user.target
