@@ -1,0 +1,14 @@
+[Unit]
+Description=NMEA Data Sync Service
+After=ifcheck.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=pi
+ExecStart=/usr/bin/env pyhton3 /home/pi/pianywhere/service/nmeasync.py
+
+[Install]
+WantedBy=multi-user.target

@@ -1,13 +1,13 @@
 [Unit]
 Description=PPP0 Interfae State Check Service
-After=network.target
+After=gpscheck.service
 StartLimitIntervalSec=0
 
 [Service]
 Type=simple
 Restart=always
 RestartSec=10
-User=root
+User=pi
 ExecStart=/usr/bin/env pyhton /home/pi/pianywhere/service/checkif.py
 
 [Install]
